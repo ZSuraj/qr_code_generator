@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple QR Code Generator</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 50px;
+      }
+      input[type="text"] {
+        padding: 10px;
+        width: 300px;
+        font-size: 16px;
+      }
+      input[type="submit"] {
+        padding: 10px 20px;
+        font-size: 16px;
+      }
+      img {
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  {% load static %}
+  <body>
+    <h1>QR Code Generator</h1>
+    <form action="/send" method="post">
+      {% csrf_token %}
+
+      <input type="text" name="data" placeholder="Enter text or URL" required />
+      <input type="hidden" name="size" value="200x200" />
+      <input type="submit" value="Generate QR Code" />
+    </form>
+    {% if qr_code_url %}
+    <img src="{{MEDIA_URL}}{% static qr_code_url %}" alt="QR Code" />
+    {% endif %}
+  </body>
+</html>
